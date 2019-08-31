@@ -15,7 +15,7 @@ var fabbricaSemantica;
             let word = fabbricaSemantica.Pages.getTextArea("word", "");
             let sentence = fabbricaSemantica.Pages.getTextArea("sentence", "");
             let sense = fabbricaSemantica.Pages.getTextArea("sense", "");
-            let correction = fabbricaSemantica.Pages.getTextArea("result", "");
+            let correction = fabbricaSemantica.Pages.getTextArea("correction", "");
             let correctButton = fabbricaSemantica.Pages.getButton("Correct");
             let wrongButton = fabbricaSemantica.Pages.getButton("Wrong");
             let skipButton = fabbricaSemantica.Pages.getButton("Skip");

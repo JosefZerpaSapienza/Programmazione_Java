@@ -17,22 +17,6 @@ import com.google.gson.JsonArray;
  */
 public class UserDatabase extends Database
 {
-	public static void main (String[] args) 
-	{
-		System.out.println(Boolean.valueOf("true"));
-		
-//		try (Database db = new Database())
-//		{
-//			boolean present = db.isPresent("josef@j.j");
-//			// db.add("josef@j.j", "josef", Arrays.asList("English"), Arrays.asList("Italian B2"));
-//			boolean check = db.checkCredentials("josef@j.j", "zerpa");
-//			int index0 = db.findUser("zerpa@j.j");
-//			int index1 = db.findUser("josef@j.j");
-//			System.out.println(present + "\n" + check + "\n" + index0 + "\n" + index1);
-//		}
-//		catch (IOException e) { e.printStackTrace(); }
-	}
-
 	/**
 	 * Name of the database file.
 	 */
@@ -95,7 +79,6 @@ public class UserDatabase extends Database
 	public boolean checkCredentials(String email, String password)
 	{
 		int index = findUser(email);
-		System.out.println("Checking credentials " + email + " : " + password + " : " + index);
 		if (index >= 0)
 		{
 			JsonObject user = (JsonObject) database.get(index);

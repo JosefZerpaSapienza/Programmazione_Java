@@ -96,8 +96,6 @@ public class WordNetDataProvider implements DataProvider<String> {
 			}
 			
 			Synset synset = WN.getRandom();
-			if (synset != null)
-				System.out.println("Synset retrieved succesfully: " + synset.toString());
 			synsetID = synset.getID();
 			word = getRandom(synset.getSynonyms());
 			word = normalize(word);
@@ -106,35 +104,23 @@ public class WordNetDataProvider implements DataProvider<String> {
 			{
 				String hypernymID = getRandom(synset.getRelatedIDs(WordNetRelation1905.HYPERNYM));
 				if (hypernymID == null)
-				{
-					System.out.println("hypernymID = null");
 					continue;
-				}
 				hypernym = getRandom(WN.getSynsetFromID(hypernymID).getSynonyms());
 				if (hypernym == null)
-				{
-					System.out.println("hypernym = null");
 					continue;
-				}
 				hypernym = normalize(hypernym);
 			}
 			if (task == StandardTask.SENSE_VALIDATION )
 			{
 				example = getRandom(synset.getExamples());
 				if (example == null || !example.contains(word))
-				{
-					System.out.println("example = null OR example doesn't contain word");
 					continue;
-				}
 			}
 			if (task == StandardTask.SENSE_ANNOTATION)
 			{
 				List<Synset> synsets = WN.getSynsets(word);
 				if (synsets.size() < 4)
-				{
-					System.out.println("the picked synset has less than 4 senses");
 					continue;
-				}
 				List<Synset> senses = new LinkedList<>();
 				for(int i = 0; i < 4; i++)
 				{
@@ -147,10 +133,7 @@ public class WordNetDataProvider implements DataProvider<String> {
 				synsetID = sense.getID();
 				sentence = getRandom(sense.getExamples());
 				if (sentence == null|| !sentence.contains(word))
-				{
-					System.out.println("the picked sense doesn't have an example OR it doesn't contain the word.");
 					continue;
-				}
 				StringJoiner sjSenses = new StringJoiner("\", \"", "[\"", "\"]");
 				StringJoiner sjSensesID = new StringJoiner("\", \"", "[\"", "\"]");
 				for (Synset sy : senses)
