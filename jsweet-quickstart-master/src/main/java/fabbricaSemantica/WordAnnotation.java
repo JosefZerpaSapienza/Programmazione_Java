@@ -12,6 +12,7 @@ import def.jquery.JQueryXHR;
 import def.js.JSON;
 import jsweet.util.StringTypes;
 
+import static def.dom.Globals.window;
 import static def.jquery.Globals.$;
 
 import static fabbricaSemantica.Constants.HOME_URL;
@@ -70,7 +71,14 @@ public class WordAnnotation
 				
 			return null;
 		});	
-		
+
+		// prevent submitting by hitting enter
+		window.onkeydown = event -> {
+		    if(event.keyCode == 13)
+		    	event.preventDefault();
+		    return null;
+		    };
+		    
 		// Format elements into divs
 		List<HTMLDivElement> divs = new LinkedList<>();
 		divs.add(Pages.getDiv(homeButton, logoutButton, titleLabel, descriptionLabel));
