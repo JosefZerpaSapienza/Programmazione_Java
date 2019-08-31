@@ -31,10 +31,12 @@ public class TaskTranslationValidationServlet extends BaseServlet {
 		String translation = request.getParameter(RADIO_NAME);
 		
 		// scrive su database
-		TranslationValidationDatabase database = TranslationValidationDatabase.getDatabase();
-		database.add(synsetID, word, translation);
-		database.close();
-		
+		if (translation != null)
+		{
+			TranslationValidationDatabase database = TranslationValidationDatabase.getDatabase();
+			database.add(synsetID, word, translation);
+			database.close();
+		}
 		// reinderizza a un task a caso.
 		response.sendRedirect(NEXT_SERVLET);
 	}

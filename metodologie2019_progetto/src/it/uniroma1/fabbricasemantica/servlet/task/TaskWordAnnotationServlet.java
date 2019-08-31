@@ -28,9 +28,12 @@ public class TaskWordAnnotationServlet extends BaseServlet
 		String word = request.getParameter("wordArea");
 		
 		// scrive su database
-		WordAnnotationDatabase database = WordAnnotationDatabase.getDatabase();
-		database.add(synsetID, description, word);
-		database.close();
+		if (!word.equals(""))
+		{
+			WordAnnotationDatabase database = WordAnnotationDatabase.getDatabase();
+			database.add(synsetID, description, word);
+			database.close();
+		}
 		
 		//TODO reinderizzare a un task a caso.
 		response.sendRedirect(NEXT_SERVLET);

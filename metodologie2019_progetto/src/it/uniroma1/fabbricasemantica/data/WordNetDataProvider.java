@@ -1,10 +1,19 @@
 package it.uniroma1.fabbricasemantica.data;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.StringJoiner;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import it.uniroma1.metodologie2019.hw3.Synset;
 import it.uniroma1.metodologie2019.hw3.WordNet;
@@ -23,15 +32,10 @@ public class WordNetDataProvider implements DataProvider<String> {
 	 * Random object to obtain random numbers.
 	 */
 	private static final Random RANDOM = new Random();
-
-	public static void main (String[] args)
-	{
-		// sense_annotation | transaltion validation
-		StandardTask[] tasks = StandardTask.values();
-		StandardTask task = tasks[RANDOM.nextInt(tasks.length)];
-		task = StandardTask.SENSE_ANNOTATION;
-		System.out.println(task + "\n" + new WordNetDataProvider().getData(task));
-	}
+	
+	private static final Path TRANSLATIONS_PATH = Paths.get("resources", "database", "translations.json");
+	
+	private static JsonArray translationSource;
 	
 	/**
 	 * Given a collection, returns a random object from that collection.
@@ -63,9 +67,10 @@ public class WordNetDataProvider implements DataProvider<String> {
 	 * Given a task, return a string in Json format with the needed data.
 	 * @param task the task to get info for.
 	 * @return a Json string.
+	 * @throws IOException 
 	 */
 	@Override 
-	public String getData(Task task) 
+	public String getData(Task task)
 	{
 		String synsetID = null;
 		String word = null;
@@ -78,6 +83,18 @@ public class WordNetDataProvider implements DataProvider<String> {
 		// exit the while only if the synset satisfies every condition and reaches the end
 		while(true)
 		{
+			if (task == StandardTask.TRANSLATION_VALIDATION)
+			{
+				if (translationSource == null)
+				{
+					try(BufferedReader br = Files.newBufferedReader(TRANSLATIONS_PATH, StandardCharsets.UTF_8))
+					{ translationSource = new Gson().fromJson(br, JsonArray.class); }
+					catch (IOException e)  { e.printStackTrace(); }
+				}
+
+				return translationSource.get(RANDOM.nextInt(translationSource.size())).toString();
+			}
+			
 			Synset synset = WN.getRandom();
 			if (synset != null)
 				System.out.println("Synset retrieved succesfully: " + synset.toString());
@@ -173,15 +190,15 @@ public class WordNetDataProvider implements DataProvider<String> {
 					"\"senses\": " + sensesJson + "," + 
 					"\"sensesID\": " + sensesIDJson + 
 					"}";
-		}else if (task == StandardTask.TRANSLATION_VALIDATION) {
-			return "{" +
-					"\"synsetID\": \"00000000n\"," +
-					"\"word\": \"rock\"," +
-					"\"description\": \"A lump or mass of hard consolidated mineral matter\"," + 
-					"\"translations\": [\"Un grumo o una massa di materia minerale consolidata dura\"," +
-										"\"Materiale costituito dall'aggregato di minerali come quelli che formano la crosta terrestre\"," +
-										"\"Un'associazione non ufficiale di persone o gruppi\"]" +
-					"}";
+//		}else if (task == StandardTask.TRANSLATION_VALIDATION) {
+//			return "{" +
+//					"\"synsetID\": \"00000000n\"," +
+//					"\"word\": \"rock\"," +
+//					"\"description\": \"A lump or mass of hard consolidated mineral matter\"," + 
+//					"\"translations\": [\"Un grumo o una massa di materia minerale consolidata dura\"," +
+//										"\"Materiale costituito dall'aggregato di minerali come quelli che formano la crosta terrestre\"," +
+//										"\"Un'associazione non ufficiale di persone o gruppi\"]" +
+//					"}";
 		}else if (task == StandardTask.SENSE_VALIDATION) {
 			return "{" + 
 					"\"synsetID\": \"" + synsetID + "\"," +

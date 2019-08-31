@@ -28,9 +28,12 @@ public class TaskTranslationAnnotationServlet extends BaseServlet
 		String translation = request.getParameter("translationArea");
 		
 		// scrive su database
-		TranslationAnnotationDatabase database = TranslationAnnotationDatabase.getDatabase();
-		database.add(synsetID, word, translation);
-		database.close();
+		if (!translation.equals(""))
+		{
+			TranslationAnnotationDatabase database = TranslationAnnotationDatabase.getDatabase();
+			database.add(synsetID, word, translation);
+			database.close();
+		}
 		
 		//TODO reinderizzare a un task a caso.
 		response.sendRedirect(NEXT_SERVLET);

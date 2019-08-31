@@ -34,9 +34,12 @@ public class TaskSenseAnnotationServlet extends BaseServlet
 		String sense = request.getParameter(RADIO_NAME);
 		
 		// scrive su database
-		SenseAnnotationDatabase database = SenseAnnotationDatabase.getDatabase();
-		database.add(synsetID, word, sentence, sense);
-		database.close();
+		if (sense != null)
+		{
+			SenseAnnotationDatabase database = SenseAnnotationDatabase.getDatabase();
+			database.add(synsetID, word, sentence, sense);
+			database.close();
+		}
 		
 		// reinderizza a un task a caso.
 		response.sendRedirect(NEXT_SERVLET);

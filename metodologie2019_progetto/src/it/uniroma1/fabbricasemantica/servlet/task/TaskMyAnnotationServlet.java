@@ -27,9 +27,12 @@ public class TaskMyAnnotationServlet extends BaseServlet {
 		String example = request.getParameter("exampleArea");
 		
 		// scrive su database
-		MyAnnotationDatabase database = MyAnnotationDatabase.getDatabase();
-		database.add(synsetID, word, example);
-		database.close();
+		if (!example.equals(""))
+		{
+			MyAnnotationDatabase database = MyAnnotationDatabase.getDatabase();
+			database.add(synsetID, word, example);
+			database.close();
+		}
 		
 		//TODO reinderizzare a un task a caso.
 		response.sendRedirect(NEXT_SERVLET);

@@ -28,9 +28,12 @@ public class TaskDefinitionAnnotationServlet extends BaseServlet
 		String definition = request.getParameter("definitionArea");
 		
 		// scrive su database
-		DefinitionAnnotationDatabase database = DefinitionAnnotationDatabase.getDatabase();
-		database.add(synsetID, word, definition);
-		database.close();
+		if (!definition.equals(""))
+		{
+			DefinitionAnnotationDatabase database = DefinitionAnnotationDatabase.getDatabase();
+			database.add(synsetID, word, definition);
+			database.close();
+		}
 		
 		// reinderizza a un task a caso.
 		response.sendRedirect(NEXT_SERVLET);
