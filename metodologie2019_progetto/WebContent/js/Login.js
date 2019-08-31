@@ -35,6 +35,11 @@ var fabbricaSemantica;
                     return null;
                 };
             })(form));
+            window.onkeydown = (event) => {
+                if (event.keyCode === 13)
+                    event.preventDefault();
+                return null;
+            };
             let divs = ([]);
             /* add */ (divs.push(fabbricaSemantica.Pages.getDiv(homeButton, titleLabel, descriptionLabel)) > 0);
             /* add */ (divs.push(fabbricaSemantica.Pages.getDiv(usernameLabel, usernameBox)) > 0);

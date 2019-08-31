@@ -61,6 +61,11 @@ var fabbricaSemantica;
                     return null;
                 };
             })(wordLabel, synsetID, word, definitionLabel));
+            window.onkeydown = (event) => {
+                if (event.keyCode === 13)
+                    event.preventDefault();
+                return null;
+            };
             let divs = ([]);
             /* add */ (divs.push(fabbricaSemantica.Pages.getDiv(homeButton, logoutButton, titleLabel, descriptionLabel)) > 0);
             /* add */ (divs.push(fabbricaSemantica.Pages.getDiv(wordLabel)) > 0);

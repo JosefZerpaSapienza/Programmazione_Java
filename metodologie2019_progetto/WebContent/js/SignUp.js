@@ -79,6 +79,11 @@ var fabbricaSemantica;
                     return null;
                 };
             })(form));
+            window.onkeydown = (event) => {
+                if (event.keyCode === 13)
+                    event.preventDefault();
+                return null;
+            };
             let divs = ([]);
             let d = fabbricaSemantica.Pages.getDiv(signupButton);
             d.setAttribute("style", "display:none");

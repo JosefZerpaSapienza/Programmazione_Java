@@ -8,6 +8,7 @@ import def.dom.HTMLFormElement;
 import def.dom.HTMLInputElement;
 import def.dom.HTMLLabelElement;
 import jsweet.util.StringTypes;
+import static def.dom.Globals.window;
 
 import static fabbricaSemantica.Constants.LOGIN_SERVLET;
 import static fabbricaSemantica.Constants.SIGNUP_URL;
@@ -51,6 +52,13 @@ public class Login
 		loginButton.addEventListener(StringTypes.click, x -> { form.action = LOGIN_SERVLET; return null; });
 		homeButton.addEventListener(StringTypes.click, x -> { form.action = HOMEPAGE_URL; return null;});
 		signupButton.addEventListener(StringTypes.click, x -> { form.action = SIGNUP_URL; return null;});
+		
+		// prevent submitting by hitting enter
+		window.onkeydown = event -> {
+		    if(event.keyCode == 13)
+		    	event.preventDefault();
+		    return null;
+		    };
 		
 		// Format elements into divs
 		List<HTMLDivElement> divs = new LinkedList<>();

@@ -12,6 +12,7 @@ import def.dom.HTMLSelectElement;
 import jsweet.util.StringTypes;
 
 import static fabbricaSemantica.Constants.SIGNUP_SERVLET;
+import static def.dom.Globals.window;
 import static fabbricaSemantica.Constants.HOMEPAGE_URL;
 import static fabbricaSemantica.Constants.LOGIN_URL;
 
@@ -71,7 +72,14 @@ public class SignUp
 		homeButton.addEventListener(StringTypes.click, x -> {form.action = HOMEPAGE_URL; return null;});
 		signupButton.addEventListener(StringTypes.click, x -> {form.action = SIGNUP_SERVLET; return null;});
 		loginButton.addEventListener(StringTypes.click, x -> {form.action = LOGIN_URL; return null;});
-		
+
+		// prevent submitting by hitting enter
+		window.onkeydown = event -> {
+		    if(event.keyCode == 13)
+		    	event.preventDefault();
+		    return null;
+		    };
+		    
 		// Format elements into divs
 		List<HTMLDivElement> divs = new LinkedList<>();
 		HTMLDivElement d = Pages.getDiv(signupButton);
